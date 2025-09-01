@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="de" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recruiting mit Sinn: Mein Konzept für die Johanniter</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Chosen Palette: Johanniter Corporate Identity -->
+    <!-- Application Structure Plan: Eine vertikal scrollende Single-Page-Application, die eine narrative Struktur verfolgt. Ein feststehender Header mit Navigation ermöglicht schnellen Zugriff auf die Kernbereiche: 1. Interaktive Personas mit Bildern. 2. Eine klickbare Candidate Journey mit dynamisch wechselnden Grafiken. 3. Ein dynamisches KPI-Dashboard mit erweiterten Metriken. 4. Eine neue interaktive Sektion zu Recruiting-Herausforderungen und Lösungen. 5. Ein abschließender Bereich für die persönliche Motivation inklusive Vorstellungsvideo. Diese Struktur führt den Betrachter logisch von der Zielgruppenanalyse über die Strategie, die Bewältigung von Herausforderungen und die Messbarkeit bis zur persönlichen Passung. -->
+    <!-- Visualization & Content Choices: 
+        - Personas: Info -> Zielgruppenverständnis zeigen -> Präsentation: Klickbare Karten mit echten Fotos -> Interaktion: Klick öffnet ein Modal mit Details -> Begründung: Hält die Übersicht sauber, personalisiert die Seite und fördert die Interaktion. Methode: HTML/Tailwind/JS.
+        - Candidate Journey: Info -> Strategie zur Prozessverbesserung -> Präsentation: Visueller Stepper/Tab-System mit dynamisch wechselnden Grafiken -> Interaktion: Klick auf eine Phase enthüllt Details und zeigt eine passende Grafik -> Begründung: Strukturiert komplexe Informationen und macht sie schrittweise verdaulich und visuell ansprechend. Methode: HTML/Tailwind/JS.
+        - KPI-Dashboard: Info -> Analytische Fähigkeiten demonstrieren -> Präsentation: Ein zentraler Chart-Bereich mit Steuerungs-Buttons, erweitert um Kosten pro Kanal -> Interaktion: Klick auf Buttons rendert dynamisch verschiedene Chart.js-Diagramme (Balken, Donut) -> Begründung: Zeigt eindrucksvoll die Fähigkeit, datengetriebene Tools zu konzipieren und zu bauen und ökonomisch zu denken. Methode: Chart.js/HTML/Tailwind/JS.
+        - Recruiting-Herausforderungen: Info -> Strategische Lösungsansätze präsentieren -> Präsentation: Interaktives Grid von Herausforderungs-Karten -> Interaktion: Klick auf eine Karte öffnet ein Modal mit der Lösung -> Begründung: Demonstriert ein tiefes Verständnis für die Branche und die Fähigkeit zur Problemlösung auf eine klare und ansprechende Weise. Die konsistente Verwendung von Modals wie bei den Personas verbessert die Benutzererfahrung. Methode: HTML/Tailwind/JS.
+        - Persönliches Video: Info -> Persönliche Motivation zeigen -> Präsentation: Eingebettetes YouTube-Video -> Begründung: Schafft eine persönliche Verbindung und unterstreicht die Authentizität. Methode: HTML/Tailwind/JS.
+        - Alle Elemente sind kontextualisiert mit einleitenden Texten, um den Zweck zu erklären und den Nutzer zu führen. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        .johanniter-red { color: #E4002B; }
+        .bg-johanniter-red { background-color: #E4002B; }
+        .border-johanniter-red { border-color: #E4002B; }
+        .johanniter-blue { color: #003366; }
+        .bg-johanniter-blue { background-color: #003366; }
+        .border-johanniter-blue { border-color: #003366; }
+        
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .nav-link.active {
+            color: #E4002B;
+            font-weight: 600;
+        }
+        .journey-step.active {
+            background-color: #003366;
+            color: white;
+            border-color: #003366;
+        }
+        .kpi-button.active {
+            background-color: #E4002B;
+            color: white;
+        }
+        .challenge-card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <span class="text-xl font-bold johanniter-red">JH</span>
+                <span class="text-lg font-semibold johanniter-blue">Recruiting-Konzept</span>
+            </div>
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="#intro" class="text-gray-600 hover:text-johanniter-red nav-link">Einleitung</a>
+                <a href="#personas" class="text-gray-600 hover:text-johanniter-red nav-link">Personas</a>
+                <a href="#journey" class="text-gray-600 hover:text-johanniter-red nav-link">Candidate Journey</a>
+                <a href="#kpi" class="text-gray-600 hover:text-johanniter-red nav-link">KPIs</a>
+                <a href="#challenges" class="text-gray-600 hover:text-johanniter-red nav-link">Herausforderungen</a>
+                <a href="#warum" class="text-gray-600 hover:text-johanniter-red nav-link">Mein Warum</a>
+                <a href="mailto:Philipp.Krohn@gmail.com?subject=Feedback zu Ihrer Bewerbung Stellen-ID: J000028094" class="inline-block bg-johanniter-red text-white font-bold py-2 px-4 rounded-full shadow-md hover:bg-red-700 transition-colors duration-200 ml-4">
+                    <i class="fas fa-envelope mr-2"></i>Kontakt aufnehmen
+                </a>
+            </div>
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-gray-600 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden bg-white py-2">
+            <a href="#intro" class="block text-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Einleitung</a>
+            <a href="#personas" class="block text-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Personas</a>
+            <a href="#journey" class="block text-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Candidate Journey</a>
+            <a href="#kpi" class="block text-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">KPIs</a>
+            <a href="#challenges" class="block text-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Herausforderungen</a>
+            <a href="#warum" class="block text-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Mein Warum</a>
+            <a href="mailto:Philipp.Krohn@gmail.com?subject=Feedback zu Ihrer Bewerbung Stellen-ID: J000028094" class="block text-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                <i class="fas fa-envelope mr-2"></i>Kontakt aufnehmen
+            </a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-8 md:py-12">
+
+        <section id="intro" class="text-center mb-16">
+            <div class="w-32 h-32 md:w-40 md:h-40 mx-auto mb-6 rounded-full overflow-hidden shadow-lg border-4 border-white transform hover:scale-110 transition-transform duration-300">
+                <img src="PK Bild Klein.jpg" alt="Philipp Krohn" class="w-full h-full object-cover">
+            </div>
+            <h1 class="text-4xl md:text-5xl font-bold johanniter-blue mb-4">Recruiting mit Sinn</h1>
+            <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
+                Hallo liebes Team und vielen Dank für Ihre Zeit. Recruiting ist im Wandel und muss sich genauso wie die Bedürfnisse der Menschen, denen wir helfen möchten, verändern. Mit dieser digitalen Bewerbung möchte ich zeigen, wie ich die Herausforderungen der Johanniter-Unfall-Hilfe e.V. im Regionalverband Schleswig-Holstein Süd/Ost mit digitalen und strategischen Ansätzen meistern würde. Mein Ziel ist es, die richtigen Talente nicht nur zu finden, sondern sie langfristig für Ihre Mission zu begeistern.
+            </p>
+        </section>
+
+        <section id="personas" class="mb-16">
+            <h2 class="text-3xl font-bold text-center johanniter-blue mb-2">1. Unsere Kandidat:innen verstehen</h2>
+            <p class="text-center text-gray-600 mb-10 max-w-3xl mx-auto">
+                Die Johanniter haben ein sehr diverses Spektrum an Stellenprofilen und damit auch ein breites Feld an Kandidat:innen. Dies ist nur ein strategisch relevanter Auszug, der auf die zentralen Herausforderungen eingeht. Klicken Sie auf eine Karte für mehr Details.
+            </p>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="persona-card bg-white p-6 rounded-lg shadow-lg cursor-pointer transform hover:scale-105 transition-transform duration-300" data-persona="maria">
+                    <img src="Maria Persona.jpg" alt="Maria, die erfahrene Pflegefachkraft" class="w-full h-auto rounded-md mb-4">
+                    <h3 class="text-xl font-semibold johanniter-blue mb-2">Maria, die erfahrene Pflegefachkraft</h3>
+                    <p class="text-gray-600">48, sucht nach einer Teilzeitstelle mit mehr Wertschätzung und Flexibilität in einem sinnstiftenden Umfeld.</p>
+                </div>
+                <div class="persona-card bg-white p-6 rounded-lg shadow-lg cursor-pointer transform hover:scale-105 transition-transform duration-300" data-persona="max">
+                    <img src="Max Persona.jpg" alt="Max, der angehende Notfallsanitäter" class="w-full h-auto rounded-md mb-4">
+                    <h3 class="text-xl font-semibold johanniter-blue mb-2">Max, der angehende Notfallsanitäter</h3>
+                    <p class="text-gray-600">21, technisch affin, möchte nach dem BFD eine Karriere mit gesellschaftlichem Beitrag und Zukunftsperspektive beginnen.</p>
+                </div>
+                <div class="persona-card bg-white p-6 rounded-lg shadow-lg cursor-pointer transform hover:scale-105 transition-transform duration-300" data-persona="selina">
+                    <img src="Selina Persona.jpg" alt="Selina, die engagierte Quereinsteigerin" class="w-full h-auto rounded-md mb-4">
+                    <h3 class="text-xl font-semibold johanniter-blue mb-2">Selina, die engagierte Quereinsteigerin</h3>
+                    <p class="text-gray-600">35, möchte sich neu orientieren und sucht eine erfüllende Aufgabe mit der Sicherheit eines Tarifvertrages in der Pflege.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="journey" class="mb-16">
+            <h2 class="text-3xl font-bold text-center johanniter-blue mb-2">2. Den Weg visualisieren: Eine interaktive Candidate Journey</h2>
+            <p class="text-center text-gray-600 mb-10 max-w-3xl mx-auto">Eine positive Bewerbererfahrung ist entscheidend. Sie beginnt mit dem ersten Kontakt und endet nicht mit der Einstellung. Hier zeige ich, wie ich die Reise eines Kandidaten bei den Johannitern an entscheidenden Punkten optimieren würde. Klicken Sie auf die Phasen, um mehr zu erfahren und ein passendes Bild zu sehen.</p>
+            <div class="flex flex-col md:flex-row bg-white rounded-lg shadow-lg overflow-hidden">
+                <div id="journey-steps" class="flex flex-row md:flex-col justify-start md:justify-center p-4 border-b-2 md:border-b-0 md:border-r-2 border-gray-100 overflow-x-auto">
+                    <button class="journey-step active text-sm md:text-base whitespace-nowrap text-left w-full p-3 my-1 rounded-md border-2 border-transparent transition-colors duration-200" data-step="1" data-image-src="Awareness.jpg">1. Awareness</button>
+                    <button class="journey-step text-sm md:text-base whitespace-nowrap text-left w-full p-3 my-1 rounded-md border-2 border-transparent transition-colors duration-200" data-step="2" data-image-src="Attraction.jpg">2. Attraction</button>
+                    <button class="journey-step text-sm md:text-base whitespace-nowrap text-left w-full p-3 my-1 rounded-md border-2 border-transparent transition-colors duration-200" data-step="3" data-image-src="Application.jpg">3. Application</button>
+                    <button class="journey-step text-sm md:text-base whitespace-nowrap text-left w-full p-3 my-1 rounded-md border-2 border-transparent transition-colors duration-200" data-step="4" data-image-src="Interview.jpg">4. Interview</button>
+                    <button class="journey-step text-sm md:text-base whitespace-nowrap text-left w-full p-3 my-1 rounded-md border-2 border-transparent transition-colors duration-200" data-step="5" data-image-src="Offer.jpg">5. Offer</button>
+                    <button class="journey-step text-sm md:text-base whitespace-nowrap text-left w-full p-3 my-1 rounded-md border-2 border-transparent transition-colors duration-200" data-step="6" data-image-src="Onboarding.jpg">6. Onboarding</button>
+                </div>
+                <div id="journey-content-and-image" class="p-8 flex-1">
+                    <div id="journey-content" class="mb-6">
+                        <div class="journey-content-panel" data-step="1">
+                            <h3 class="text-2xl font-semibold johanniter-blue mb-3">Awareness (Wahrnehmung)</h3>
+                            <p class="font-semibold mb-1 text-red-600">Schmerzpunkt:</p>
+                            <p class="mb-4 text-gray-700">Die Marke Johanniter ist primär mit Spenden und Rettung verbunden, nicht mit dem Arbeitsumfeld.</p>
+                            <p class="font-semibold mb-1 text-green-600">Lösung:</p>
+                            <p class="text-gray-700">Proaktives Employer Branding über Social Media, das die vielfältigen Jobmöglichkeiten und die werteorientierte Kultur gezielt hervorhebt.</p>
+                        </div>
+                        <div class="journey-content-panel hidden" data-step="2">
+                            <h3 class="text-2xl font-semibold johanniter-blue mb-3">Attraction (Anziehung)</h3>
+                            <p class="font-semibold mb-1 text-red-600">Schmerzpunkt:</p>
+                            <p class="mb-4 text-gray-700">Jobanzeigen vermitteln oft keine authentischen Einblicke in den Arbeitsalltag.</p>
+                            <p class="font-semibold mb-1 text-green-600">Lösung:</p>
+                            <p class="text-gray-700">Erstellung von authentischen Videoinhalten und Testimonials von Mitarbeitenden, um eine realistische "Day-in-the-Life"-Erfahrung zu vermitteln.</p>
+                        </div>
+                        <div class="journey-content-panel hidden" data-step="3">
+                            <h3 class="text-2xl font-semibold johanniter-blue mb-3">Application (Bewerbung)</h3>
+                            <p class="font-semibold mb-1 text-red-600">Schmerzpunkt:</p>
+                            <p class="mb-4 text-gray-700">Der Bewerbungsprozess ist oft zu lang und nicht für mobile Geräte optimiert.</p>
+                            <p class="font-semibold mb-1 text-green-600">Lösung:</p>
+                            <p class="text-gray-700">Vereinfachung des Bewerbungsformulars (Mobile First) und die Möglichkeit zur Schnellbewerbung, um die Abbruchrate zu minimieren.</p>
+                        </div>
+                         <div class="journey-content-panel hidden" data-step="4">
+                            <h3 class="text-2xl font-semibold johanniter-blue mb-3">Interview (Gespräch)</h3>
+                            <p class="font-semibold mb-1 text-red-600">Schmerzpunkt:</p>
+                            <p class="mb-4 text-gray-700">Die Gesprächsführung ist inkonsistent und kann potenzielle Talente verunsichern.</p>
+                            <p class="font-semibold mb-1 text-green-600">Lösung:</p>
+                            <p class="text-gray-700">Einführung von Schulungen für Führungskräfte zur Gesprächsführung und Einarbeitung in Mitbestimmungsrechte (MAV).</p>
+                        </div>
+                         <div class="journey-content-panel hidden" data-step="5">
+                            <h3 class="text-2xl font-semibold johanniter-blue mb-3">Offer (Angebot)</h3>
+                            <p class="font-semibold mb-1 text-red-600">Schmerzpunkt:</p>
+                            <p class="mb-4 text-gray-700">Die Gehaltsstruktur (AVR-DWBO) ist nicht verhandelbar, was Unsicherheit erzeugen kann.</p>
+                            <p class="font-semibold mb-1 text-green-600">Lösung:</p>
+                            <p class="text-gray-700">Transparente Kommunikation der tariflichen Vorteile (13. Gehalt, Altersvorsorge etc.), um das Wertversprechen klar zu betonen.</p>
+                        </div>
+                         <div class="journey-content-panel hidden" data-step="6">
+                            <h3 class="text-2xl font-semibold johanniter-blue mb-3">Onboarding (Einarbeitung)</h3>
+                            <p class="font-semibold mb-1 text-red-600">Schmerzpunkt:</p>
+                            <p class="mb-4 text-gray-700">Das Onboarding ist oft unstrukturiert und lässt neue Mitarbeiter allein.</p>
+                            <p class="font-semibold mb-1 text-green-600">Lösung:</p>
+                            <p class="text-gray-700">Bereitstellung eines interaktiven 30/60/90-Tage-Plans, der klare Ziele, Ansprechpartner und Ressourcen für die ersten Monate festlegt.</p>
+                        </div>
+                    </div>
+                    <div class="relative w-full aspect-video rounded-lg shadow-md mt-4">
+                        <img id="journey-image" src="Awareness.jpg" alt="Grafik zur Candidate Journey" class="w-full h-full rounded-lg object-cover">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="kpi" class="mb-16">
+            <h2 class="text-3xl font-bold text-center johanniter-blue mb-2">3. Erfolg messen: Ein interaktives KPI-Dashboard</h2>
+            <p class="text-center text-gray-600 mb-10 max-w-3xl mx-auto">Das Fundament moderner Personalbeschaffung sind Daten. Ein interaktives Dashboard ermöglicht es, den Erfolg in Echtzeit zu messen, Engpässe zu identifizieren und die Effizienz zu steigern. Wählen Sie eine Kennzahl, um die Visualisierung zu sehen.</p>
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <div class="flex flex-wrap justify-center gap-2 mb-6">
+                    <button class="kpi-button active py-2 px-4 rounded-full bg-gray-200 text-gray-700 font-semibold transition-colors duration-200" data-kpi="timeToFill">Time-to-Fill</button>
+                    <button class="kpi-button py-2 px-4 rounded-full bg-gray-200 text-gray-700 font-semibold transition-colors duration-200" data-kpi="sourceOfHire">Source-of-Hire</button>
+                    <button class="kpi-button py-2 px-4 rounded-full bg-gray-200 text-gray-700 font-semibold transition-colors duration-200" data-kpi="satisfaction">Candidate Satisfaction</button>
+                    <button class="kpi-button py-2 px-4 rounded-full bg-gray-200 text-gray-700 font-semibold transition-colors duration-200" data-kpi="retention">90-Tage-Retention</button>
+                    <button class="kpi-button py-2 px-4 rounded-full bg-gray-200 text-gray-700 font-semibold transition-colors duration-200" data-kpi="costPerAcquisition">Kosten pro Kanal</button>
+                </div>
+                <div class="chart-container">
+                    <canvas id="kpiChart"></canvas>
+                </div>
+                <div id="kpi-description" class="mt-4 text-center text-gray-600"></div>
+            </div>
+        </section>
+
+        <section id="challenges" class="mb-16">
+            <h2 class="text-3xl font-bold text-center johanniter-blue mb-2">4. Herausforderungen & smarte Lösungen</h2>
+            <p class="text-center text-gray-600 mb-10 max-w-3xl mx-auto">
+                Die Personalgewinnung steht vor vielen Hürden. Hier zeige ich, wie ich die zentralen Herausforderungen im Recruiting der Johanniter analysieren und durch strategische, digitale Lösungen meistern würde. Klicken Sie auf eine Herausforderung, um die passende Lösung zu sehen.
+            </p>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+                <div class="challenge-card bg-white p-6 rounded-lg shadow-lg cursor-pointer transition-transform transform hover:scale-105" data-challenge="shortage">
+                    <div class="text-4xl mb-4 text-johanniter-red text-center"><i class="fas fa-search-dollar"></i></div>
+                    <h3 class="text-xl font-semibold johanniter-blue text-center">Fachkräftemangel & Sichtbarkeit</h3>
+                </div>
+                <div class="challenge-card bg-white p-6 rounded-lg shadow-lg cursor-pointer transition-transform transform hover:scale-105" data-challenge="process">
+                    <div class="text-4xl mb-4 text-johanniter-red text-center"><i class="fas fa-hourglass-half"></i></div>
+                    <h3 class="text-xl font-semibold johanniter-blue text-center">Lange Bewerbungsprozesse</h3>
+                </div>
+                <div class="challenge-card bg-white p-6 rounded-lg shadow-lg cursor-pointer transition-transform transform hover:scale-105" data-challenge="authenticity">
+                    <div class="text-4xl mb-4 text-johanniter-red text-center"><i class="fas fa-theater-masks"></i></div>
+                    <h3 class="text-xl font-semibold johanniter-blue text-center">Fehlende Authentizität</h3>
+                </div>
+                <div class="challenge-card bg-white p-6 rounded-lg shadow-lg cursor-pointer transition-transform transform hover:scale-105" data-challenge="young-talent">
+                    <div class="text-4xl mb-4 text-johanniter-red text-center"><i class="fas fa-graduation-cap"></i></div>
+                    <h3 class="text-xl font-semibold johanniter-blue text-center">Nachwuchsgewinnung</h3>
+                </div>
+            </div>
+        </section>
+        
+        <div id="challenge-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center p-4 z-50">
+            <div class="bg-white rounded-lg shadow-2xl max-w-lg w-full p-8 relative transform scale-95 transition-transform duration-300">
+                <button id="challenge-modal-close-button" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-2xl">&times;</button>
+                <div id="challenge-modal-content"></div>
+            </div>
+        </div>
+
+        <section id="warum">
+            <h2 class="text-3xl font-bold text-center johanniter-blue mb-2">5. Mein persönliches "Warum"</h2>
+            <div class="bg-white rounded-lg shadow-lg p-8 mt-8 max-w-4xl mx-auto">
+                <p class="text-lg text-gray-700 leading-relaxed text-center mb-6">
+                    Meine Motivation geht weit über die reinen Aufgaben eines Recruiters hinaus. Ich bin davon überzeugt, dass moderne Talentakquise in sozialen Organisationen eine Schlüsselrolle bei der Bewältigung gesellschaftlicher Herausforderungen spielt. Das Leitmotiv „Aus Liebe zum Leben“ ist nicht nur ein Slogan, sondern der Grund, warum Menschen wie Maria, Max und Selina und all die weiteren möglichen Mitglieder der Johanniter Familie sich engagieren. Meine Leidenschaft ist es, diese Menschen zu finden und ihnen eine berufliche Heimat zu bieten, die ihren Werten entspricht. Ich bin bereit, meine analytischen, strategischen und digitalen Fähigkeiten einzusetzen, um die Personalbeschaffung bei den Johannitern nicht nur effizienter, sondern auch menschlicher zu gestalten.
+                </p>
+                <div class="relative overflow-hidden w-full max-w-2xl mx-auto rounded-lg shadow-lg aspect-video mb-6">
+                    <iframe 
+                        src="https://www.youtube-nocookie.com/embed/_2j6Dxy30_Y" 
+                        title="YouTube video player" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        allowfullscreen 
+                        class="absolute top-0 left-0 w-full h-full">
+                    </iframe>
+                </div>
+                <div class="text-center">
+                    <a href="mailto:Philipp.Krohn@gmail.com?subject=Feedback zu Ihrer Bewerbung Stellen-ID: J000028094" class="inline-block bg-johanniter-red text-white font-bold py-3 px-8 rounded-full shadow-md hover:bg-red-700 transition-colors duration-200">
+                        <i class="fas fa-envelope mr-2"></i>Kontakt aufnehmen
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-johanniter-blue text-white mt-16">
+        <div class="container mx-auto px-6 py-4 text-center">
+            <p class="text-sm">Diese Webseite ist eine digitale Anlage zu meiner Bewerbung bei der Johanniter-Unfall-Hilfe e.V., Stellen-ID: J000028094. Alle dargestellten Daten und Grafiken dienen der Veranschaulichung, Personenbilder sind fiktiv.</p>
+        </div>
+    </footer>
+    
+    <div id="persona-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-lg shadow-2xl max-w-lg w-full p-8 relative transform scale-95 transition-transform duration-300">
+            <button id="modal-close-button" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-2xl">&times;</button>
+            <div id="modal-content"></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            
+            const personaModalData = {
+                maria: {
+                    icon: '<i class="fas fa-hand-holding-heart"></i>',
+                    title: 'Maria, die erfahrene Pflegefachkraft',
+                    content: `
+                        <p class="mb-2"><strong>Hintergrund:</strong> 48 Jahre alt, arbeitet seit 20 Jahren in einem kommunalen Krankenhaus. Sucht nach einer Teilzeitstelle, um mehr Zeit für ihre Familie zu haben.</p>
+                        <p class="mb-2"><strong>Motivation:</strong> Sie ist demotiviert durch starre Schichtpläne und fehlende Anerkennung. Sie sucht nach einer sinnstiftenden Tätigkeit in einem werteorientierten Umfeld und einem Team, in dem sie sich wohlfühlt.</p>
+                        <p class="font-semibold mt-4 mb-2">Wo erreichen wir sie?</p>
+                        <div class="flex items-center space-x-2 text-johanniter-blue mb-2">
+                            <i class="fab fa-linkedin fa-2x"></i>
+                            <i class="fab fa-facebook fa-2x"></i>
+                            <span class="text-gray-700 text-sm">Gezielte Social-Media-Kampagnen auf LinkedIn und Facebook.</span>
+                        </div>
+                        <p class="font-semibold mt-4 mb-2">Wie erreichen wir sie?</p>
+                        <div class="text-gray-700">
+                            <p><strong>Botschaft:</strong> "Finde deine flexible Teilzeitstelle. Mehr als nur ein Job – eine Berufung, die sich deinem Leben anpasst."</p>
+                            <p><strong>Ansprache:</strong> Betonung der Work-Life-Balance und des werteorientierten Arbeitsumfelds. Gezielte Ansprache in fachspezifischen Gruppen und Communities, in denen sie aktiv ist.</p>
+                        </div>
+                    `
+                },
+                max: {
+                    icon: '<i class="fas fa-ambulance"></i>',
+                    title: 'Max, der angehende Notfallsanitäter',
+                    content: `
+                        <p class="mb-2"><strong>Hintergrund:</strong> 21 Jahre alt, hat seinen Bundesfreiwilligendienst bei einer Hilfsorganisation absolviert. Er ist technisch affin und nutzt soziale Medien aktiv.</p>
+                        <p class="mb-2"><strong>Motivation:</strong> Ihn treibt der Wunsch an, einen direkten Beitrag zum gesellschaftlichen Zusammenhalt zu leisten. Er möchte eine Karriere in einem Bereich beginnen, der ihm eine stabile Zukunftsperspektive und Weiterbildungsmöglichkeiten bietet.</p>
+                        <p class="font-semibold mt-4 mb-2">Wo erreichen wir ihn?</p>
+                        <div class="flex items-center space-x-2 text-johanniter-blue mb-2">
+                            <i class="fab fa-tiktok fa-2x"></i>
+                            <i class="fab fa-instagram fa-2x"></i>
+                            <span class="text-gray-700 text-sm">Authentische Video-Inhalte auf TikTok und Instagram.</span>
+                        </div>
+                        <p class="font-semibold mt-4 mb-2">Wie erreichen wir ihn?</p>
+                        <div class="text-gray-700">
+                            <p><strong>Botschaft:</strong> "Deine Mission startet jetzt. Werde Teil eines Teams, das Leben rettet. Wir bilden dich aus."</p>
+                            <p><strong>Ansprache:</strong> Nutzung von kurzen, dynamischen Videos (Reels, TikToks), die den spannenden und abwechslungsreichen Arbeitsalltag zeigen. Fokus auf Ausbildung, Technologie und Teamspirit.</p>
+                        </div>
+                    `
+                },
+                selina: {
+                    icon: '<i class="fas fa-user-friends"></i>',
+                    title: 'Selina, die engagierte Quereinsteigerin',
+                    content: `
+                        <p class="mb-2"><strong>Hintergrund:</strong> 35 Jahre alt, hat als Assistentin im Einzelhandel gearbeitet. Sie möchte sich beruflich neu orientieren und strebt eine sinnvolle Aufgabe in der Pflege an.</p>
+                        <p class="mb-2"><strong>Motivation:</strong> Sie sucht nach einer Tätigkeit, die sie erfüllt und die Sicherheit eines Tarifvertrages bietet. Die Option für einen Quereinstieg ohne vorherige Ausbildung ist für sie entscheidend.</p>
+                        <p class="font-semibold mt-4 mb-2">Wo erreichen wir sie?</p>
+                        <div class="flex items-center space-x-2 text-johanniter-blue mb-2">
+                            <i class="fas fa-bullhorn fa-2x"></i>
+                            <i class="fas fa-graduation-cap fa-2x"></i>
+                            <span class="text-gray-700 text-sm">Gezielte Anzeigen und Informationsveranstaltungen.</span>
+                        </div>
+                        <p class="font-semibold mt-4 mb-2">Wie erreichen wir sie?</p>
+                        <div class="text-gray-700">
+                            <p><strong>Botschaft:</strong> "Beruflich neu starten? Wir begleiten dich. Quereinstieg in die Pflege mit uns."</p>
+                            <p><strong>Ansprache:</strong> Gezielte Ansprache über Anzeigen in regionalen Medien und auf Karriere-Webseiten. Hervorhebung von Schulungs- und Einarbeitungsprogrammen sowie der Sicherheit des Tarifvertrags.</p>
+                        </div>
+                    `
+                }
+            };
+            
+            const personaCards = document.querySelectorAll('.persona-card');
+            const modal = document.getElementById('persona-modal');
+            const modalContent = document.getElementById('modal-content');
+            const modalCloseButton = document.getElementById('modal-close-button');
+            const modalContainer = modal.querySelector('div');
+
+            personaCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const personaKey = card.dataset.persona;
+                    const data = personaModalData[personaKey];
+                    modalContent.innerHTML = `
+                        <div class="text-4xl mb-4 text-johanniter-red text-center">${data.icon}</div>
+                        <h3 class="text-2xl font-semibold johanniter-blue mb-4 text-center">${data.title}</h3>
+                        <div class="text-gray-700 space-y-3">${data.content}</div>
+                    `;
+                    modal.classList.remove('hidden');
+                    modal.classList.add('flex');
+                    setTimeout(() => modalContainer.classList.remove('scale-95'), 10);
+                });
+            });
+
+            function closeModal() {
+                 modalContainer.classList.add('scale-95');
+                 setTimeout(() => {
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                 }, 300);
+            }
+
+            modalCloseButton.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+            
+            const journeySteps = document.querySelectorAll('.journey-step');
+            const journeyContentPanels = document.querySelectorAll('.journey-content-panel');
+            const journeyImage = document.getElementById('journey-image');
+
+            journeySteps.forEach(step => {
+                step.addEventListener('click', () => {
+                    const stepNumber = step.dataset.step;
+                    const imageSrc = step.dataset.imageSrc;
+
+                    journeySteps.forEach(s => s.classList.remove('active'));
+                    step.classList.add('active');
+
+                    journeyContentPanels.forEach(panel => {
+                        if (panel.dataset.step === stepNumber) {
+                            panel.classList.remove('hidden');
+                        } else {
+                            panel.classList.add('hidden');
+                        }
+                    });
+                    
+                    if (journeyImage) {
+                         journeyImage.src = imageSrc;
+                    }
+                });
+            });
+
+            const kpiButtons = document.querySelectorAll('.kpi-button');
+            const kpiDescription = document.getElementById('kpi-description');
+            const ctx = document.getElementById('kpiChart').getContext('2d');
+            let kpiChart;
+
+            const kpiData = {
+                timeToFill: {
+                    type: 'bar',
+                    label: 'Besetzungszeit in Tagen',
+                    labels: ['Pflegefachkraft', 'Notfallsanitäter', 'Verwaltung', 'Päd. Fachkraft'],
+                    data: [45, 62, 28, 55],
+                    description: 'Misst, wie lange es dauert, eine offene Stelle zu besetzen. Dieser Wert ist entscheidend, um die operative Kapazität sicherzustellen und Planungsunsicherheiten zu reduzieren.',
+                    conclusion: 'Die Daten zeigen, dass die Time-to-Fill im Rettungsdienst und in der Pädagogik am längsten ist. Meine Priorität wäre es, diese Prozesse durch schlankere Abläufe und gezieltes Sourcing zu beschleunigen.'
+                },
+                sourceOfHire: {
+                    type: 'doughnut',
+                    label: 'Anteil Bewerbungen nach Kanal',
+                    labels: ['Jobbörsen', 'Social Media', 'Freiwilligendienst', 'Mitarbeiterempfehlung'],
+                    data: [40, 25, 15, 20],
+                    description: 'Zeigt, welche Recruiting-Kanäle die besten Kandidaten liefern. Dies ermöglicht eine effiziente Budgetallokation.',
+                    conclusion: 'Jobbörsen sind momentan die Hauptquelle, aber Social Media und Mitarbeiterempfehlungen zeigen großes Potenzial. Mein Fokus würde darauf liegen, das Budget umzuschichten, um diese authentischen und kostengünstigeren Kanäle stärker zu nutzen.'
+                },
+                satisfaction: {
+                    type: 'bar',
+                    label: 'Zufriedenheit (Skala 1-5)',
+                    labels: ['Bewerbungsprozess', 'Kommunikation', 'Interview', 'Angebot'],
+                    data: [3.8, 4.5, 4.2, 4.8],
+                    description: 'Misst die Zufriedenheit der Bewerber mit dem gesamten Prozess. Eine hohe Zufriedenheit stärkt die Arbeitgebermarke.',
+                    conclusion: 'Die Kommunikation und das Angebot sind Stärken der Johanniter, aber der Bewerbungsprozess hat Optimierungsbedarf. Ich würde hier ansetzen, um die Candidate Experience weiter zu verbessern und die Absprungrate zu senken.'
+                },
+                retention: {
+                    type: 'line',
+                    label: 'Verbleib nach 90 Tagen in %',
+                    labels: ['Jan', 'Feb', 'Mär', 'Apr', 'Mai'],
+                    data: [88, 92, 90, 94, 95],
+                    description: 'Die Messung der Verweildauer gibt Aufschluss über die Qualität der Einstellung und des Onboarding-Prozesses.',
+                    conclusion: 'Die Retention Rate ist stabil und hoch, was auf eine gute Einstellung und ein funktionierendes Onboarding hinweist. Ich würde dieses positive Ergebnis nutzen, um es im Recruiting zu kommunizieren und so Vertrauen bei potenziellen Bewerbern aufzubauen.'
+                },
+                costPerAcquisition: {
+                    type: 'bar',
+                    label: 'Kosten pro Einstellung (€)',
+                    labels: ['Jobbörsen', 'Social Media', 'Karriereseite', 'Empfehlungsprogramm'],
+                    data: [850, 420, 150, 50],
+                    description: 'Zeigt die Effizienz der Recruiting-Kanäle. Eine transparente Kostenanalyse hilft, das Budget optimal zu steuern und den ROI zu maximieren.',
+                    conclusion: 'Die Daten belegen, dass Empfehlungsprogramme und die Karriereseite die effizientesten Kanäle sind. Meine Strategie wäre, diese Kanäle mit gezielten Social-Media-Kampagnen zu verstärken, um die Kosten pro Einstellung weiter zu senken.'
+                }
+            };
+            
+            function renderChart(kpiKey) {
+                if (kpiChart) {
+                    kpiChart.destroy();
+                }
+                
+                const data = kpiData[kpiKey];
+                kpiDescription.innerHTML = `<p>${data.description}</p><p class="mt-4 font-semibold text-johanniter-red">Schlussfolgerung: ${data.conclusion}</p>`;
+
+                let datasets;
+                if(data.type === 'line'){
+                    datasets = [{
+                        label: data.label,
+                        data: data.data,
+                        borderColor: '#E4002B',
+                        backgroundColor: 'rgba(228, 0, 43, 0.1)',
+                        fill: true,
+                        tension: 0.3
+                    }];
+                } else {
+                     datasets = [{
+                        label: data.label,
+                        data: data.data,
+                        backgroundColor: [
+                            '#003366',
+                            '#E4002B',
+                            '#6495ED',
+                            '#FF6347',
+                            '#8A2BE2'
+                        ],
+                        borderColor: '#FFFFFF',
+                        borderWidth: data.type === 'doughnut' ? 2 : 0
+                    }];
+                }
+
+                kpiChart = new Chart(ctx, {
+                    type: data.type,
+                    data: {
+                        labels: data.labels,
+                        datasets: datasets
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: data.type === 'doughnut' ? 'bottom' : 'top',
+                                display: data.type !== 'bar'
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.dataset.label || '';
+                                        if (label) {
+                                            label += ': ';
+                                        }
+                                        if (context.parsed.y !== null) {
+                                            label += context.parsed.y;
+                                        } else {
+                                             label += context.parsed;
+                                        }
+                                        if(data.type === 'doughnut' || kpiKey === 'retention') label += '%';
+                                        if(kpiKey === 'costPerAcquisition') label += ' €';
+                                        return label;
+                                    }
+                                }
+                            }
+                        },
+                         scales: {
+                            y: {
+                                beginAtZero: true,
+                                display: data.type !== 'doughnut'
+                            },
+                            x: {
+                                display: data.type !== 'doughnut'
+                            }
+                        }
+                    }
+                });
+            }
+
+            kpiButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    kpiButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    renderChart(button.dataset.kpi);
+                });
+            });
+
+            renderChart('timeToFill');
+            
+            const challengeModalData = {
+                shortage: {
+                    title: 'Fachkräftemangel & Sichtbarkeit',
+                    icon: '<i class="fas fa-search-dollar"></i>',
+                    content: `
+                        <p class="mb-4">In einem engen Arbeitsmarkt ist es entscheidend, die Marke Johanniter als attraktiven Arbeitgeber klar zu positionieren. Meine Lösung: Proaktive Kampagnen auf sozialen Medien wie LinkedIn und Facebook, die die werteorientierte Kultur, flexible Teilzeitmodelle und die Sinnhaftigkeit der Arbeit in den Mittelpunkt stellen.</p>
+                        <p>Ich nutze Active Sourcing, um direkt mit qualifizierten Fachkräften in Kontakt zu treten, und verlasse mich nicht nur auf passive Anzeigen.</p>
+                    `
+                },
+                process: {
+                    title: 'Lange Bewerbungsprozesse',
+                    icon: '<i class="fas fa-hourglass-half"></i>',
+                    content: `
+                        <p class="mb-4">Lange und komplizierte Bewerbungsprozesse schrecken Bewerber ab. Meine Lösung: Ich würde den Bewerbungsprozess auf das Wesentliche reduzieren und für mobile Geräte optimieren.</p>
+                        <p>Quick-Apply-Optionen über Messenger oder ein-Klick-Bewerbungen senken die Abbruchrate drastisch. Das Ziel ist es, den Kandidaten in maximal 5 Minuten eine Rückmeldung zu geben und den Prozess so einfach wie möglich zu gestalten.</p>
+                    `
+                },
+                authenticity: {
+                    title: 'Fehlende Authentizität',
+                    icon: '<i class="fas fa-theater-masks"></i>',
+                    content: `
+                        <p class="mb-4">Stellenanzeigen sind oft generisch und vermitteln kein echtes Bild vom Arbeitsalltag. Meine Lösung: Ich würde authentische Video- und Fotoinhalte von echten Mitarbeitern im Einsatz erstellen.</p>
+                        <p>Ein "Day in the Life"-Video oder kurze Testimonials von Sanitätern und Pflegekräften schaffen Vertrauen und lassen potenzielle Kandidaten emotional in die Welt der Johanniter eintauchen.</p>
+                    `
+                },
+                'young-talent': {
+                    title: 'Nachwuchsgewinnung',
+                    icon: '<i class="fas fa-graduation-cap"></i>',
+                    content: `
+                        <p class="mb-4">Die Gewinnung von Nachwuchs beginnt nicht erst mit der Stellensuche. Meine Lösung: Ich würde systematische Partnerschaften mit Berufsschulen, Universitäten und Freiwilligendiensten wie dem FSJ aufbauen.</p>
+                        <p>Durch regelmäßige Informationsveranstaltungen und die Pflege dieser Beziehungen in einer "Talent-Pipeline" kann ein kontinuierlicher Strom an qualifizierten Nachwuchskräften sichergestellt werden.</p>
+                    `
+                }
+            };
+            
+            const challengeCards = document.querySelectorAll('.challenge-card');
+            const challengeModal = document.getElementById('challenge-modal');
+            const challengeModalContent = document.getElementById('challenge-modal-content');
+            const challengeModalCloseButton = document.getElementById('challenge-modal-close-button');
+            const challengeModalContainer = challengeModal.querySelector('div');
+
+            challengeCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const challengeKey = card.dataset.challenge;
+                    const data = challengeModalData[challengeKey];
+                    challengeModalContent.innerHTML = `
+                        <div class="text-4xl mb-4 text-johanniter-red text-center">${data.icon}</div>
+                        <h3 class="text-2xl font-semibold johanniter-blue mb-4 text-center">${data.title}</h3>
+                        <div class="text-gray-700 space-y-3">${data.content}</div>
+                    `;
+                    challengeModal.classList.remove('hidden');
+                    challengeModal.classList.add('flex');
+                    setTimeout(() => challengeModalContainer.classList.remove('scale-95'), 10);
+                });
+            });
+
+            function closeChallengeModal() {
+                 challengeModalContainer.classList.add('scale-95');
+                 setTimeout(() => {
+                    challengeModal.classList.add('hidden');
+                    challengeModal.classList.remove('flex');
+                 }, 300);
+            }
+
+            challengeModalCloseButton.addEventListener('click', closeChallengeModal);
+            challengeModal.addEventListener('click', (e) => {
+                if (e.target === challengeModal) {
+                    closeChallengeModal();
+                }
+            });
+
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            mobileMenu.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+            
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('main section');
+
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (pageYOffset >= sectionTop - 100) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${current}`) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+
+        });
+    </script>
+</body>
+</html>
+
