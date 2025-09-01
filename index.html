@@ -120,22 +120,22 @@
             </p>
             <div class="grid md:grid-cols-3 gap-8">
                 <div class="persona-card bg-white p-6 rounded-lg shadow-lg cursor-pointer transform hover:scale-105 transition-transform duration-300" data-persona="maria">
-                    <div class="w-full aspect-square overflow-hidden rounded-md mb-4">
-                        <img src="Maria Persona.png" alt="Maria, die erfahrene Pflegefachkraft" class="w-full h-full object-cover">
+                    <div class="w-full aspect-square overflow-hidden rounded-md mb-4 flex items-center justify-center">
+                        <img src="Maria Persona.png" alt="Maria, die erfahrene Pflegefachkraft" class="object-contain">
                     </div>
                     <h3 class="text-xl font-semibold johanniter-blue mb-2">Maria, die erfahrene Pflegefachkraft</h3>
                     <p class="text-gray-600">48, sucht nach einer Teilzeitstelle mit mehr Wertschätzung und Flexibilität in einem sinnstiftenden Umfeld.</p>
                 </div>
                 <div class="persona-card bg-white p-6 rounded-lg shadow-lg cursor-pointer transform hover:scale-105 transition-transform duration-300" data-persona="max">
-                    <div class="w-full aspect-square overflow-hidden rounded-md mb-4">
-                        <img src="Max Persona.png" alt="Max, der angehende Notfallsanitäter" class="w-full h-full object-cover">
+                    <div class="w-full aspect-square overflow-hidden rounded-md mb-4 flex items-center justify-center">
+                        <img src="Max Persona.png" alt="Max, der angehende Notfallsanitäter" class="object-contain">
                     </div>
                     <h3 class="text-xl font-semibold johanniter-blue mb-2">Max, der angehende Notfallsanitäter</h3>
                     <p class="text-gray-600">21, technisch affin, möchte nach dem BFD eine Karriere mit gesellschaftlichem Beitrag und Zukunftsperspektive beginnen.</p>
                 </div>
                 <div class="persona-card bg-white p-6 rounded-lg shadow-lg cursor-pointer transform hover:scale-105 transition-transform duration-300" data-persona="selina">
-                    <div class="w-full aspect-square overflow-hidden rounded-md mb-4">
-                        <img src="Selina Persona.png" alt="Selina, die engagierte Quereinsteigerin" class="w-full h-full object-cover">
+                    <div class="w-full aspect-square overflow-hidden rounded-md mb-4 flex items-center justify-center">
+                        <img src="Selina Persona.png" alt="Selina, die engagierte Quereinsteigerin" class="object-contain">
                     </div>
                     <h3 class="text-xl font-semibold johanniter-blue mb-2">Selina, die engagierte Quereinsteigerin</h3>
                     <p class="text-gray-600">35, möchte sich neu orientieren und sucht eine erfüllende Aufgabe mit der Sicherheit eines Tarifvertrages in der Pflege.</p>
@@ -200,8 +200,8 @@
                             <p class="text-gray-700">Bereitstellung eines interaktiven 30/60/90-Tage-Plans, der klare Ziele, Ansprechpartner und Ressourcen für die ersten Monate festlegt.</p>
                         </div>
                     </div>
-                    <div class="relative w-full aspect-video rounded-lg shadow-md mt-4">
-                        <img id="journey-image" src="Awareness.png" alt="Grafik zur Candidate Journey" class="w-full h-full rounded-lg object-cover">
+                    <div class="relative w-full aspect-video rounded-lg shadow-md mt-4 flex items-center justify-center">
+                        <img id="journey-image" src="Awareness.png" alt="Grafik zur Candidate Journey" class="object-contain max-h-full max-w-full">
                     </div>
                 </div>
             </div>
@@ -237,7 +237,7 @@
                 </div>
                 <div class="challenge-card bg-white p-6 rounded-lg shadow-lg cursor-pointer transition-transform transform hover:scale-105" data-challenge="process">
                     <div class="text-4xl mb-4 text-johanniter-red text-center"><i class="fas fa-hourglass-half"></i></div>
-                    <h3 class="text-xl font-semibold johanniter-blue text-center">Lange Bewerbungsprozesse</h3>
+                    <h3 class="text-xl font-semibold johanniter-blue text-center">Lange Bewerbungsdauer</h3>
                 </div>
                 <div class="challenge-card bg-white p-6 rounded-lg shadow-lg cursor-pointer transition-transform transform hover:scale-105" data-challenge="authenticity">
                     <div class="text-4xl mb-4 text-johanniter-red text-center"><i class="fas fa-theater-masks"></i></div>
@@ -245,7 +245,7 @@
                 </div>
                 <div class="challenge-card bg-white p-6 rounded-lg shadow-lg cursor-pointer transition-transform transform hover:scale-105" data-challenge="young-talent">
                     <div class="text-4xl mb-4 text-johanniter-red text-center"><i class="fas fa-graduation-cap"></i></div>
-                    <h3 class="text-xl font-semibold johanniter-blue text-center">Nachwuchsgewinnung</h3>
+                    <h3 class="text-xl font-semibold johanniter-blue text-center">Gewinnung von Nachwuchs</h3>
                 </div>
             </div>
         </section>
@@ -306,16 +306,15 @@
             
             const personaModalData = {
                 maria: {
-                    icon: '<i class="fas fa-hand-holding-heart"></i>',
+                    icon: '👩‍⚕️',
                     title: 'Maria, die erfahrene Pflegefachkraft',
                     content: `
                         <p class="mb-2"><strong>Hintergrund:</strong> 48 Jahre alt, arbeitet seit 20 Jahren in einem kommunalen Krankenhaus. Sucht nach einer Teilzeitstelle, um mehr Zeit für ihre Familie zu haben.</p>
                         <p class="mb-2"><strong>Motivation:</strong> Sie ist demotiviert durch starre Schichtpläne und fehlende Anerkennung. Sie sucht nach einer sinnstiftenden Tätigkeit in einem werteorientierten Umfeld und einem Team, in dem sie sich wohlfühlt.</p>
                         <p class="font-semibold mt-4 mb-2">Wo erreichen wir sie?</p>
                         <div class="flex items-center space-x-2 text-johanniter-blue mb-2">
-                            <i class="fab fa-linkedin fa-2x"></i>
-                            <i class="fab fa-facebook fa-2x"></i>
-                            <span class="text-gray-700 text-sm">Gezielte Social-Media-Kampagnen auf LinkedIn und Facebook.</span>
+                            <span class="text-2xl">👩‍⚕️</span>
+                            <span class="text-sm">Gezielte Social-Media-Kampagnen auf LinkedIn und Facebook.</span>
                         </div>
                         <p class="font-semibold mt-4 mb-2">Wie erreichen wir sie?</p>
                         <div class="text-gray-700">
@@ -325,16 +324,15 @@
                     `
                 },
                 max: {
-                    icon: '<i class="fas fa-ambulance"></i>',
+                    icon: '🚑',
                     title: 'Max, der angehende Notfallsanitäter',
                     content: `
                         <p class="mb-2"><strong>Hintergrund:</strong> 21 Jahre alt, hat seinen Bundesfreiwilligendienst bei einer Hilfsorganisation absolviert. Er ist technisch affin und nutzt soziale Medien aktiv.</p>
                         <p class="mb-2"><strong>Motivation:</strong> Ihn treibt der Wunsch an, einen direkten Beitrag zum gesellschaftlichen Zusammenhalt zu leisten. Er möchte eine Karriere in einem Bereich beginnen, der ihm eine stabile Zukunftsperspektive und Weiterbildungsmöglichkeiten bietet.</p>
                         <p class="font-semibold mt-4 mb-2">Wo erreichen wir ihn?</p>
                         <div class="flex items-center space-x-2 text-johanniter-blue mb-2">
-                            <i class="fab fa-tiktok fa-2x"></i>
-                            <i class="fab fa-instagram fa-2x"></i>
-                            <span class="text-gray-700 text-sm">Authentische Video-Inhalte auf TikTok und Instagram.</span>
+                            <span class="text-2xl">🚑</span>
+                            <span class="text-sm">Authentische Video-Inhalte auf TikTok und Instagram.</span>
                         </div>
                         <p class="font-semibold mt-4 mb-2">Wie erreichen wir sie?</p>
                         <div class="text-gray-700">
@@ -344,16 +342,15 @@
                     `
                 },
                 selina: {
-                    icon: '<i class="fas fa-user-friends"></i>',
+                    icon: '📢',
                     title: 'Selina, die engagierte Quereinsteigerin',
                     content: `
                         <p class="mb-2"><strong>Hintergrund:</strong> 35 Jahre alt, hat als Assistentin im Einzelhandel gearbeitet. Sie möchte sich beruflich neu orientieren und strebt eine sinnvolle Aufgabe in der Pflege an.</p>
                         <p class="mb-2"><strong>Motivation:</strong> Sie sucht nach einer Tätigkeit, die sie erfüllt und die Sicherheit eines Tarifvertrages bietet. Die Option für einen Quereinstieg ohne vorherige Ausbildung ist für sie entscheidend.</p>
                         <p class="font-semibold mt-4 mb-2">Wo erreichen wir sie?</p>
                         <div class="flex items-center space-x-2 text-johanniter-blue mb-2">
-                            <i class="fas fa-bullhorn fa-2x"></i>
-                            <i class="fas fa-graduation-cap fa-2x"></i>
-                            <span class="text-gray-700 text-sm">Gezielte Anzeigen und Informationsveranstaltungen.</span>
+                            <span class="text-2xl">📢</span>
+                            <span class="text-sm">Gezielte Anzeigen und Informationsveranstaltungen.</span>
                         </div>
                         <p class="font-semibold mt-4 mb-2">Wie erreichen wir sie?</p>
                         <div class="text-gray-700">
@@ -568,31 +565,33 @@
             const challengeModalData = {
                 shortage: {
                     title: 'Fachkräftemangel & Sichtbarkeit',
-                    icon: '<i class="fas fa-search-dollar"></i>',
+                    icon: '🔍',
                     content: `
                         <p class="mb-4">In einem engen Arbeitsmarkt ist es entscheidend, die Marke Johanniter als attraktiven Arbeitgeber klar zu positionieren. Meine Lösung: Proaktive Kampagnen auf sozialen Medien wie LinkedIn und Facebook, die die werteorientierte Kultur, flexible Teilzeitmodelle und die Sinnhaftigkeit der Arbeit in den Mittelpunkt stellen.</p>
                         <p>Ich nutze Active Sourcing, um direkt mit qualifizierten Fachkräften in Kontakt zu treten, und verlasse mich nicht nur auf passive Anzeigen.</p>
                     `
                 },
                 process: {
-                    title: 'Lange Bewerbungsprozesse',
-                    icon: '<i class="fas fa-hourglass-half"></i>',
+                    title: 'Lange Bewerbungsdauer',
+                    icon: '⏱️',
                     content: `
                         <p class="mb-4">Lange und komplizierte Bewerbungsprozesse schrecken Bewerber ab. Meine Lösung: Ich würde den Bewerbungsprozess auf das Wesentliche reduzieren und für mobile Geräte optimieren.</p>
                         <p>Quick-Apply-Optionen über Messenger oder ein-Klick-Bewerbungen senken die Abbruchrate drastisch. Das Ziel ist es, den Kandidaten in maximal 5 Minuten eine Rückmeldung zu geben und den Prozess so einfach wie möglich zu gestalten.</p>
+                        <p class="mt-4 font-semibold text-johanniter-red">Hinweis zur Strategie:</p>
+                        <p class="text-gray-700">Meine Aufgabe als Recruiter sehe ich nicht darin, weitere externe Dienstleister zu beauftragen. Stattdessen setze ich auf den Aufbau moderner, datensicherer und kosteneffizienter Inhouse-Lösungen, um nachhaltige und adaptive Prozesse zu schaffen, die die Johanniter langfristig unabhängig machen.</p>
                     `
                 },
                 authenticity: {
                     title: 'Fehlende Authentizität',
-                    icon: '<i class="fas fa-theater-masks"></i>',
+                    icon: '🎭',
                     content: `
                         <p class="mb-4">Stellenanzeigen sind oft generisch und vermitteln kein echtes Bild vom Arbeitsalltag. Meine Lösung: Ich würde authentische Video- und Fotoinhalte von echten Mitarbeitern im Einsatz erstellen.</p>
                         <p>Ein "Day in the Life"-Video oder kurze Testimonials von Sanitätern und Pflegekräften schaffen Vertrauen und lassen potenzielle Kandidaten emotional in die Welt der Johanniter eintauchen.</p>
                     `
                 },
                 'young-talent': {
-                    title: 'Nachwuchsgewinnung',
-                    icon: '<i class="fas fa-graduation-cap"></i>',
+                    title: 'Gewinnung von Nachwuchs',
+                    icon: '🎓',
                     content: `
                         <p class="mb-4">Die Gewinnung von Nachwuchs beginnt nicht erst mit der Stellensuche. Meine Lösung: Ich würde systematische Partnerschaften mit Berufsschulen, Universitäten und Freiwilligendiensten wie dem FSJ aufbauen.</p>
                         <p>Durch regelmäßige Informationsveranstaltungen und die Pflege dieser Beziehungen in einer "Talent-Pipeline" kann ein kontinuierlicher Strom an qualifizierten Nachwuchskräften sichergestellt werden.</p>
